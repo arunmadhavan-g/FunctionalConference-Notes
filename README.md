@@ -4,7 +4,9 @@
 
 ### 16th Nov   
   [Introduction to Functional Programming Using Haskell](IntroToFunctionalProgUsingHaskell.md)
-  A full day session that was conducted by Tony Morris and Alios Chochard
+  <p>
+    A full day session that was conducted by Tony Morris and Alios Chochard
+  </p>
 
 ### 17th Nov - ERLANG FACTORY
 
