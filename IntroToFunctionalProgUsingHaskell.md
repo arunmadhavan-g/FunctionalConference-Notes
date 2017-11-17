@@ -27,7 +27,7 @@ We Learnt about creating a function and how function can be a value.
 
 ### Types
 
-Haskell is a statically typed language with type inference at compile time. A type can be defined using the ** data ** construct.
+Haskell is a statically typed language with type inference at compile time. A type can be defined using the **data** construct.
 
 ```
 data Shape  =
@@ -37,7 +37,7 @@ data Shape  =
 Though the language is going to do type inference, It was always advised to define it type, as it will remove ambiguity from the program and can lead to 0 defects.
 
 <br>
-We can Check the type by using the ** type ** or just ** t ** as shown below
+We can Check the type by using the **type** or just **t** as shown below
 
 ```
 func1 :: Integer -> Integer
@@ -66,7 +66,7 @@ For example we looked into the type class of == (equals) then we would see the f
 (==) :: Eq a => a -> a -> Bool
 
 ```
-Above snippet shows the ** == ** is constrained by ** Eq **.  
+Above snippet shows the **==** is constrained by **Eq**.  
 
 
 
