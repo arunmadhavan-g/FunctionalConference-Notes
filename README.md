@@ -1,6 +1,6 @@
-#Functional Conference 2017
+# Functional Conference 2017
 
-##Sessions Attended
+## Sessions Attended
 
 ### 16th Nov   
   (Introduction to Functional Programming Using Haskell)[IntroToFunctionalProgUsingHaskell.md]
@@ -9,4 +9,3 @@
 ### 17th Nov - ERLANG FACTORY
 
 ### 18th Nov -
- 
