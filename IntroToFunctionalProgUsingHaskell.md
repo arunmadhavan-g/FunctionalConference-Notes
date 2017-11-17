@@ -4,12 +4,13 @@
 </p>
 
 <p>
-  The session started off with the basics of Haskell. <To Be Updated> 
+  The session started off with the basics of Haskell. <To Be Updated>
 </p>
 
 
 ### References Suggested
-
+|Topics | Links |
+| ---- | ----|
 | Github Used For Exercises | https://github.com/data61/fp-course |
 | Reference Links in the Bottom on this page | https://qfpl.io/ |
 | Convert Long Lambdas to Shorter More Concise Forms | http://pointfree.io/ |
