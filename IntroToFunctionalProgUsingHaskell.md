@@ -37,6 +37,7 @@ data Shape  =
 Though the language is going to do type inference, It was always advised to define it type, as it will remove ambiguity from the program and can lead to 0 defects.
 
 <br>
+
 We can Check the type by using the **type** or just **t** as shown below
 
 ```
