@@ -34,6 +34,16 @@ data Shape  =
  Circle Integer | Square Integer | Rectangle Integer Integer
 ```
 
+Note the Parameter type each of those Shapes take. like __Circle *Integer*__. The Integer denotes the parameter type it takes while creating a Circle. This can be done like below,
+
+```
+> c = Circle 3
+> s = Square 4
+> r = Rectangle 3 4
+
+```
+
+
 Though the language is going to do type inference, It was always advised to define it type, as it will remove ambiguity from the program and can lead to 0 defects.
 
 <br>
@@ -66,7 +76,87 @@ For example we looked into the type class of == (equals) then we would see the f
 (==) :: Eq a => a -> a -> Bool
 
 ```
-Above snippet shows the **==** is constrained by **Eq**.  
+Above snippet shows the **==** is constrained by **Eq**.   
+
+While Defining our own Type, and while trying to display the value of an initialised type, we would not be able to show it in the console. This is because it would use **show** function internally and the type that we defined does not have an implementation on how to handle the same.   
+
+The simplest way to handle the same is to derive the type as shown below.  
+
+```
+data Shape  =
+ Circle Integer | Square Integer | Rectangle Integer Integer
+ deriving (Eq, Show)
+```  
+In the above snippet, we see that the TypeClasses Eq and Show are derived which means we would be able to compare and display the values as required.  
+
+### Pattern Matching
+
+Haskell provides an amazing way of pattern matching and we were introduced to it by helping us define functions for the types that we just defined.  
+
+Lets for example take the case of calculating Perimeter for the Shapes that we have defined. We would write functions for the same as shown below.  
+
+```
+perimeter:: Shape -> Integer
+perimeter (Circle r) = r*2*pie
+perimeter (Square s) = s*4
+perimeter (Rectangle w h) = (w+h)*2
+
+```
+
+As you can see, we have the same function name but with different Types of Shape. What happens is when anyone wants to find the perimeter of a square, it would come from the top, check if any of the implementation is Square, and when it matches the square, it would go into the function and execute it.
+
+```
+> perimeter (Square 3)
+12
+> perimeter (Rectangle 4  3)
+14
+>
+```
+
+Pattern matching is used extensively and is the way to perform loops using recursion. For example to find the sum of first n numbers the code would look like below.
+
+```
+sumOfN :: Integer -> Integer
+sumOfN 0 = 0
+sumOfN n = n + sumOfN (n-1)
+```
+
+In the above code, if the value is pattern matched to "0" then it would return 0, else you would recurse until 0 and keep adding the sum.  
+
+This effectively would lead to a condition free implementation with if ... else.  
+
+### Recursive Types
+
+We looked into a very interesting structure while defining types. The representation of Natural Numbers as shown below.
+
+```
+data Natural = Zero | Successor Natural
+  deriving (Eq, Show)
+```
+
+To represent any natural number, one would express them as below.
+
+```
+four = Successor(Successor(Successor(Successor(Zero))))
+```
+
+You can derive other natural numbers from  as successor of already defined ones. For Example
+
+```
+six = Successor(Successor(four))
+```
+
+We would define an add function as below
+
+```
+add :: Natural -> Natural -> Natural
+add Zero  x = x
+add (Successor q) x =  Successor (add q x)
+
+> four `add` six
+Successor (Successor (Successor (Successor (Successor (Successor (Successor (Successor (Successor (Successor Zero)))))))))
+
+```
 
 
 
