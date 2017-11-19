@@ -176,7 +176,7 @@ Successor (Successor (Successor (Successor (Successor (Successor (Successor (Suc
 
 ### Optional
 
-We started looking into the Exercises that we checked out from (github)[https://github.com/data61/fp-course] and the first exercise that we looked into was Optionals defined inside _Optional.hs_ file
+We started looking into the Exercises that we checked out from [github](https://github.com/data61/fp-course) and the first exercise that we looked into was Optionals defined inside _Optional.hs_ file
 
 
 
