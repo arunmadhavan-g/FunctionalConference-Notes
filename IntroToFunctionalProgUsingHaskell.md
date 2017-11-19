@@ -90,6 +90,21 @@ data Shape  =
 ```  
 In the above snippet, we see that the TypeClasses Eq and Show are derived which means we would be able to compare and display the values as required.  
 
+We can create the Shape of our choice by specifying the type as shown below
+
+```
+s = Square 4
+r = Rectangle 8
+
+```
+
+### Generic Types
+
+It is possible that the behaviour of a function can be applied across many data types. For example lets take the case of **==** that we saw earlier, it had a type  **_Eq a => a -> a -> Bool_**. You many notice that the function takes in types "a" and returns back a "Bool"
+
+Here "a" denotes a generic type.
+
+
 ### Pattern Matching
 
 Haskell provides an amazing way of pattern matching and we were introduced to it by helping us define functions for the types that we just defined.  
@@ -158,6 +173,11 @@ add (Successor q) x =  Successor (add q x)
 Successor (Successor (Successor (Successor (Successor (Successor (Successor (Successor (Successor (Successor Zero)))))))))
 
 ```
+
+### Optional
+
+We started looking into the Exercises that we checked out from (github)[https://github.com/data61/fp-course] and the first exercise that we looked into was Optionals defined inside _Optional.hs_ file
+
 
 
 
