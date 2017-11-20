@@ -364,8 +364,88 @@ Lets see how.
     product = foldLeft (\a b -> a*b) 1
 3. The lambda \a b -> a * b can be further simplified and expressed as (* ) which finally makes the expression
     product = foldLeft (* ) 1
-    
 
+#### Exercise 3: sum
+Similar to product, this function returns sum.
+
+The definition and implementation would look like below.
+
+```
+sum :: List Int -> Int
+sum = foldLeft (+) 0
+```    
+
+#### Exercise 4: length
+
+The length would give the length of the list and its type is
+
+```
+length :: List a -> Int
+```
+Lets first do a recursion based implementation
+
+```
+length Nil= 0
+length (_ :. t) = 1 + length t
+```
+A foldLeft implementation would be
+
+```
+length = foldLeft (\a _-> a+1 ) 0
+```
+You may notice that we only care about incrementing the accumulator.  This can further be reduced as shown below.
+
+```
+const . (1 +)
+```
+<TODO need to check what const is and how we came here>
+
+#### Exercise 5: map
+Similar to the mapOptional in Optional, the map function takes in a function and applied it on all the individual members of the list.  
+
+```
+map :: (a -> b) : List a : List b
+```
+
+Lets do it recursively first.
+
+```
+map _ Nil= Nil
+map f (h :. t) = (f h) :.  (map f t)
+```
+This can be implemented using a function called foldRight.
+The foldRight f p list.
+
+* from the list it replaced all the :. with f
+* it replaces the Nil at the end of the list with p
+
+The final outcome would look like this.
+
+```
+map f = foldRight ((:.) . f ) Nil
+
+```
+
+#### Exercise 6: Filter
+ Filter would help you filter based on a condition and goes by the type
+ ```
+ filter :: (a -> Bool) -> List a -> List a
+ ```
+Lets do the recursion version.
+
+```
+filter _ Nil = Nil
+filter p (h :. t)= case (p h) of
+                    True -> h :. (filter p t)
+                    False -> (filter p t)
+
+```
+
+We can use foldRight here too and the function implementation would be as shown below.
+<TODO the fold Right version as we do not have the understanding of how its done>
+
+
+#### Exercise 7:
 
 ### References Suggested
 |Topics | Links |
