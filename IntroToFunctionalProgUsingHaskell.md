@@ -178,8 +178,193 @@ Successor (Successor (Successor (Successor (Successor (Successor (Successor (Suc
 
 We started looking into the Exercises that we checked out from [github](https://github.com/data61/fp-course) and the first exercise that we looked into was Optionals defined inside _Optional.hs_ file
 
+Optionals are structures that helps us deal with data that can be empty or have a value. Effectively in comparing it with Java paradigm, it helps us prevent any null pointer exceptions, helping us with a very safe handling of data.
+
+I'll try to document all the various steps we took while trying to solve the exerised in the Optionals.hs
 
 
+We had a pre-defined Type for optional which was defined as below.
+
+```
+data Optional a =
+  Full a
+  | Empty
+  deriving (Eq, Show)
+```
+
+This indicates that we could either have a Full object, which is an object with a value or an Empty one. Notice the generic types the Optional takes, which just helps us wrap all the types with an optionals.
+
+#### Exercise 1 : implement mapOptional
+
+This is a function that is used to transform the value inside the context of Optional which takes a function type as shown below.
+
+```
+mapOptional :: (a -> b) -> Optional a -> Optional b
+--             Function | transform from | transform to
+```
+
+To implement the same,  we use pattern matching. In this case,
+
+1. For any function, if the Optional a is _Empty_ , then Optional b would always be _Empty_
+2. For every other case, we apply the function on a to transform it to b, wrap it again in an Optional
+
+The implementation is as follows.
+
+```
+mapOptional _  Empty = Empty
+mapOptional f (Full a) =  Full (f a)
+```
+
+This can also be implemented using case as shown below
+
+
+```
+mapOptional f = \v -> case v of
+                        Empty -> Empty
+                        Full a -> Full (f a)
+```
+
+
+#### Exercise 2: Implement bindOptional
+
+Bind is similar to Map, but the function transformer returns an Optional too.
+The function type is defined as shown below.
+
+```
+bindOptional :: (a -> Optional b) -> Optional a -> Optional b
+```
+
+The implementation goes as below,  ( we just apply the function and return its result.)
+
+```
+bindOptional _ Empty= Empty
+bindOptional f (Full a) = f a
+```
+
+#### Exercise 3: Implement  (??)
+
+This brings us to an interesting piece. When the given function name is a non alphabet, it will be considered by default as an infix operation.  In this example we implement the **??** that helps in returning a value from 2 inputs depeneding on whether or not the first one exists.
+
+The function type goes as below.
+
+```
+(??) :: Optional a -> a -> a
+```
+
+Implementation would be as below.
+
+```
+(??) Empty b = b
+(??) (Full a) _ = a
+```
+#### Exercise 4: Implement (<+>)
+
+Similar to the previous exercise, we return back an optional for Optional inputs, the type is as shown below.
+
+```
+(<+>) ::Optional a -> Optional a -> Optional a
+```
+
+The implementation is similar to the previous one as shown below
+
+```
+(<+>) Empty v = v
+(<+>) v _ = v
+```
+
+
+### List
+
+Haskell has an inbuilt list, but we worked on building our own list data structure.  Essentially its a recursive data structure which can be Empty ( in this case we define it as Nil), or it could have some value recursively.
+
+To give a better view of a list
+* An Empty list would be having an element [Nil], which denotes the end of the list too.
+* A single element would look like [v1, Nil]
+* More elements added would mean we will have then as [v1, v2, Nil]
+
+As we grow we keep adding more and more elements to the top and for our case we use an operator __:.__
+
+So in short, the list would be formed as below.
+
+_v1 :. v2 :. v3 :. Nil_
+
+The type to define a list would be defined as below.
+
+```
+data List t =
+  Nil
+  | t :. List t
+  deriving (Eq, Ord)
+```
+
+Notice the recursive structure that says t :. List t.
+
+#### Head and Tail of the list
+
+In a list head denotes the 1st element and Tail the rest of it.
+For E.g. in a list [1 :. 2 :. 3:. 4:. 5 :. Nil]
+head would be **1** and tail would be **[2 :. 3:. 4:. 5 :. Nil]**
+
+#### Exercise 1 : headOr
+
+An headOr function helps in returning the head of the list. In case the list if empty, it would return an alternate value.
+
+The function is defined as below.
+
+```
+headOr :: a -> List a -> a
+```
+
+The implementation for the same would look like below.
+
+```
+headOr a Nil = a
+headOr _ (h :. _) = h
+```
+Notice the beauty of pattern matching in the second line. When the list has some value, we completely disregard the first input and then represent the 2nd input as a pattern that consists of "h" which is the head, the :. and the rest of the list which as mentioned before is the tail.
+
+In this case, we also do not need the tail and its ignored.
+
+#### Exercise 2: product
+
+We consider a list of Integers and the result of the function would give the product of all the numbers in the list.
+Notice that we need to define it only for Integers. the Function definition would be as shown below.
+
+```
+product :: List Int -> Int
+```
+
+The implementation would involve multiplying all the individual numbers  as shown below.
+
+```
+product Nil = 1
+product (h :. t) =  h * product t
+```
+
+Notice that we are doing a recursion of the product function, where we call it repeatedly until the list becomes empty and fulfils the Nil condition flow.
+
+#### Exercise 2 : product using foldLeft
+
+We were introduced to the foldLeft function that helps in running through the function from the left to right and apply a function on each of the members.  Below implementation is an alternate implementation of the same using foldLeft
+
+```
+product l = foldLeft (\a b -> a*b) 1 l
+```
+This above call passes a function that products the 2 numbers, a starting aggregator and finally the list
+
+This function can be simplified as show below.
+```
+product = foldLeft (* ) 1
+```
+Lets see how.
+
+1.  the product could be defined as a lambda expression
+    product = \l -> foldLeft (\a b -> a*b) 1 l
+2. This can further be simplified by removing the l from each of the lambda and removing the -> as shown below  
+    product = foldLeft (\a b -> a*b) 1
+3. The lambda \a b -> a * b can be further simplified and expressed as (* ) which finally makes the expression
+    product = foldLeft (* ) 1
+    
 
 
 ### References Suggested
