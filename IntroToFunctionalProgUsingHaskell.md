@@ -472,6 +472,67 @@ flatten :: List (List a) -> List a
 flatten = foldRight (++) Nil
 ```
 
+#### Exercise 9: flatMap
+flatMap takes a function, that transforms a -> List b, but returns a List of b.  
+This obviously means you apply the function to each of the elements and flatten the map.  
+
+```
+flatMap :: (a -> List b) -> List a -> List b
+```
+
+The implementation would be as follows. I've tried to show the steps to evolve into the same.
+
+```
+--flatMap f l = flatten (foldRight (\a b-> ((f a) :. b)) Nil l)
+--flatMap f l = flatten (foldRight (\a -> ((:.) (f a))) Nil l)
+--flatMap f l = flatten (foldRight ((:.) . f) Nil l)
+flatMap f l = flatten (foldRight ((:.) . f) Nil l)
+```
+
+But hey wait. Can we have another implementation for the same? Lets try now using the ++ instead of flatten and see how it evolves.
+
+```
+--flatMap f l = foldRight (\a b -> (f a) ++ b) Nil l
+--flatMap f l = foldRight (\a-> (++)(f a)) Nil l
+--flatMap f l = foldRight ((++) .f) Nil l
+flatMap f = foldRight ((++).f)  Nil
+```
+Wow shorter right. But wait do we have another way of implementing it? Hey wait, when we want to apply a function to all the elements of a list, did we not do it with **map** ? So the implementation would be flattening the map like below.
+
+```
+--flatMap f l = flatten (map f l)
+flatMap  f = flatten . map f
+```
+
+Its a great example where we use other function and make a really short implementation leveraging the functions.
+
+
+#### Exercise 10: flattenAgain
+
+Implement flatten again , but using flatMap. Lets give it a try.
+A flatMap would apply a function to all its elements and then concatenate the results together.
+
+But in our case what should each of those functions return? Itself :) , we just concatenate all of the individual ones together in flatMap.
+
+**id** is a function that returns itself which has a type as below
+```
+id :: a -> a  
+```
+
+So our implementation would be
+
+```
+flattenAgain :: List (List a) -> List a
+flattenAgain = flatMap id
+```
+
+#### Exercise 11: seqOptional
+
+Convert a list of optional values to an optional list of values as defined by the type
+```
+seqOptional :: List (Optional a) -> Optional (List a)
+```
+
 
 
 ### References Suggested
