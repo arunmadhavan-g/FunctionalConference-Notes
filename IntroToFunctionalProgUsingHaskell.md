@@ -396,9 +396,14 @@ length = foldLeft (\a _-> a+1 ) 0
 You may notice that we only care about incrementing the accumulator.  This can further be reduced as shown below.
 
 ```
-const . (1 +)
+length = foldLeft (const . (1 +)) 0
 ```
-<TODO need to check what const is and how we came here>
+
+const is a function that taken in 2 inputs and always return the 1st one.  defined by the type
+
+```
+const :: a -> b -> a
+```
 
 #### Exercise 5: map
 Similar to the mapOptional in Optional, the map function takes in a function and applied it on all the individual members of the list.  
@@ -445,7 +450,29 @@ We can use foldRight here too and the function implementation would be as shown 
 <TODO the fold Right version as we do not have the understanding of how its done>
 
 
-#### Exercise 7:
+#### Exercise 7: Implementing (++)
+
+Its a simple implementation using foldRight function. If you remember the definition of foldRight,
+we replace the (:.) with a function f and the Nil with the value passed.
+
+Thus the definition and implementation would look like below,
+
+```
+(++) :: List a -> List a -> List a
+(++) a b = foldRight (:.) b a
+```
+
+#### Exercise 8: flatten
+
+Flatten takes a nested list and flattens it into a single list.
+Applying the same principle, we get the implementation to be as shown below.
+
+```
+flatten :: List (List a) -> List a
+flatten = foldRight (++) Nil
+```
+
+
 
 ### References Suggested
 |Topics | Links |
